@@ -18,6 +18,8 @@ namespace Lab3_NguyenXuanTien_1911066400.Controllers
         }
         // GET: Courses
         [Authorize]
+        // Chỉ được áp dụng cho controller, Action của controller, Pagemodel
+        //Để xác định ai được quyền truy cập vào
         public ActionResult Create()
         {
             var viewModel = new CourseViewModel
@@ -29,6 +31,7 @@ namespace Lab3_NguyenXuanTien_1911066400.Controllers
         [Authorize]
         [HttpPost]
         [ValidateAntiForgeryToken]
+        //Check spam request tới sever
         public ActionResult Create(CourseViewModel viewModel)
         {
             if (!ModelState.IsValid)
@@ -41,7 +44,7 @@ namespace Lab3_NguyenXuanTien_1911066400.Controllers
                 LecturerId = User.Identity.GetUserId(),
                 DateTime = viewModel.GetDateTime(),
                 CategoryId = viewModel.Category,
-                Place =viewModel.Place
+                Place = viewModel.Place
             };
             _dbContext.Courses.Add(course);
             _dbContext.SaveChanges();
